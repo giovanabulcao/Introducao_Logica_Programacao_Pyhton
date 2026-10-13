@@ -20,16 +20,16 @@ O curso tem como objetivo ensinar lógica de programação utilizando a linguage
 
 ### Conteúdo programático
 
-#### Aula 1 — Algoritmos e Variáveis
+#### Aula 1 - Algoritmos e Variáveis
 Conceitos fundamentais de programação: o que é um algoritmo, o que é uma linguagem de programação, o que é o Python, ambiente de desenvolvimento (VS Code), tipos de dados, variáveis, operações aritméticas e lógicas, e acompanhamento da execução passo a passo do código com o Python Tutor.
 
-#### Aula 2 — Listas, Condicionais e Laços
+#### Aula 2 - Listas, Condicionais e Laços
 O que é uma lista e as funções relacionadas a ela, estruturas condicionais (`if`, `else`, `elif`) e a estrutura de repetição `for`.
 
-#### Aula 3 — While, Escopo e Funções
+#### Aula 3 - While, Escopo e Funções
 Recapitulação das estruturas de repetição, introdução ao `while`, escopo de variáveis, funções e diferentes formas de comentar o código.
 
-#### Aula 4 — Módulos
+#### Aula 4 - Módulos
 Introdução ao conceito de `import` e módulos, com um projeto básico de entrada e saída de informações.
 
 #### Projeto Final

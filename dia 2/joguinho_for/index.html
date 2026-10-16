@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Herói vs Slime — o laço while</title>
+
+  <!-- Fontes: JetBrains Mono (código) e Bebas Neue (números de dano e GAME OVER) -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <!-- 1. CENA: herói, slime e texto de GAME OVER -->
+    <section class="scene" id="scene">
+      <div class="actor" id="heroWrap"><canvas id="hero"></canvas></div>
+      <div class="actor"><canvas id="slime"></canvas></div>
+      <div id="gameOver"></div>
+    </section>
+
+    <!-- 2. PAINEL DE STATUS: barra de vida e valor de ataque -->
+    <section class="stats">
+      <div class="hp">
+        <div class="hp-row">
+          <span class="label">vida</span>
+          <span id="hpText">100/100</span>
+        </div>
+        <div class="bar"><i id="hpBar"></i></div>
+      </div>
+      <div class="attack">
+        <span class="label">ataque</span>
+        <b id="attackText">30</b>
+      </div>
+    </section>
+
+    <!-- 3. EDITOR DE CÓDIGO
+         O <textarea> (transparente) fica sobre o <pre> (colorido).
+         Você digita no textarea e vê o texto colorido do pre. -->
+    <section class="code">
+      <div id="arrow">▶</div>
+      <pre id="highlight" aria-hidden="true"></pre>
+      <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Código"></textarea>
+    </section>
+
+    <!-- 4. CONTROLES -->
+    <div class="controls">
+      <button id="runBtn">Executar</button>
+      <button id="demoBtn" class="secondary">Digitar demo</button>
+      <label><input type="checkbox" id="autoRun" checked> auto</label>
+      <label>velocidade <input type="range" id="speed" min="120" max="1400" step="20" value="900"></label>
+    </div>
+
+    <!-- Mensagens de status e de erro -->
+    <div id="message"></div>
+
+    <p class="hint">
+      Edite o código e a animação segue. As variáveis <span class="c-var">vida</span> e
+      <span class="c-var">ataque</span> controlam o herói e o slime.
+      Aceita: = += -= *= /=, + - * / % **, comparações, and/or/not, while, if/elif/else,
+      for … in range(n) e print("texto").
+    </p>
+  </main>
+
+  <!-- Lógica (interpretador + animação) -->
+  <script src="script.js"></script>
+</body>
+</html>

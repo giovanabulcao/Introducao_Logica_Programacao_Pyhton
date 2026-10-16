@@ -1,0 +1,262 @@
+/* ==========================================================
+   Herói vs Slime — estilos
+   Índice: 1. Variáveis  2. Base  3. Cena  4. Animações
+           5. Status  6. Editor  7. Controles
+   ========================================================== */
+
+/* ---------- 1. Variáveis (cores e fonte) ---------- */
+:root {
+  color-scheme: dark;
+
+  --bg:   #161716;   /* fundo da página */
+  --card: #202120;   /* fundo dos painéis */
+  --line: #2f312f;   /* bordas */
+  --text: #e9e9e6;
+  --muted: #8d8f8b;
+
+  --pink:   #f01154; /* vida, dano, GAME OVER */
+  --orange: #f0a070; /* números */
+  --green:  #a6e07a; /* vida cheia, textos */
+  --yellow: #f2cc60; /* funções (print) */
+  --purple: #c874f0; /* palavras-chave (while, if) */
+  --teal:   #4fd6c2; /* operadores */
+
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  /* respeita áreas seguras do celular (notch, barra inferior) */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------- 2. Base ---------- */
+* { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px var(--mono);
+}
+
+.app {
+  width: 100%;
+  max-width: 460px;
+  padding: 10px 14px 28px;
+}
+
+/* ---------- 3. Cena (personagens) ---------- */
+.scene {
+  position: relative;
+  height: 260px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 44px;
+  padding-bottom: 16px;
+}
+
+.actor { position: relative; }
+
+/* sombra no chão embaixo de cada personagem */
+.actor::after {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: -7px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .5);
+}
+
+canvas {
+  display: block;
+  image-rendering: pixelated;   /* mantém os pixels nítidos ao ampliar */
+  transform-origin: 50% 100%;   /* gira/estica a partir dos pés */
+}
+
+/* Herói: balança parado; ao morrer, cai deitado e fica cinza */
+#hero {
+  animation: bob 1s steps(2) infinite;
+  transition: transform .55s cubic-bezier(.4, 1.5, .5, 1), filter .5s;
+}
+#hero.dead {
+  animation: none;
+  transform: translate(-78px, -50px) rotate(90deg);
+  filter: grayscale(1) brightness(.8);
+}
+#hero.hit { animation: hit .35s; }
+
+/* Slime: "respira"; ao atacar, avança para o herói */
+#slime {
+  animation: squish 1.4s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+#slime.lunge { animation: lunge .4s; }
+
+/* Número de dano (-30) que sobe e some */
+.pop {
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  font: 28px 'Bebas Neue', Impact, sans-serif;
+  color: var(--pink);
+  pointer-events: none;
+  animation: pop 1s forwards;
+}
+.pop.up { color: var(--green); }   /* cura (+20) */
+
+/* Texto GAME OVER */
+#gameOver {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 34px;
+  text-align: center;
+  font: 72px/1 'Bebas Neue', Impact, sans-serif;
+  letter-spacing: 2px;
+  color: var(--pink);
+  text-shadow: 4px 4px 0 #000;
+  opacity: 0;
+  transform: scale(.8);
+  transition: .3s;
+  pointer-events: none;
+}
+#gameOver.on { opacity: 1; transform: none; }
+
+/* ---------- 4. Animações (keyframes) ---------- */
+@keyframes bob    { 50% { transform: translateY(-3px); } }
+@keyframes squish { 50% { transform: scale(1.04, .94); } }
+@keyframes hit {
+  20% { transform: translateX(-8px); filter: brightness(2); }
+  50% { transform: translateX(5px); }
+}
+@keyframes lunge {
+  40% { transform: translateX(-34px) scale(1.1, .9); }
+}
+@keyframes pop {
+  from { transform: translate(-50%, 10px); opacity: 0; }
+  15%  { opacity: 1; }
+  to   { transform: translate(-50%, -22px); opacity: 0; }
+}
+
+/* ---------- 5. Painel de status ---------- */
+.stats {
+  display: flex;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.hp     { flex: 1; padding: 9px 12px; }
+.attack { min-width: 92px; padding: 9px 16px; border-left: 1px solid var(--line); }
+.attack b { display: block; margin-top: 2px; font-size: 20px; color: var(--orange); }
+
+.hp-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+.label  { color: var(--pink); font-size: 12px; }
+
+.bar { height: 9px; border-radius: 5px; background: #0d0e0d; overflow: hidden; }
+#hpBar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--green);
+  transition: width .5s, background .3s;
+}
+#hpBar.y   { background: #efc767; }            /* vida média */
+#hpBar.r   { background: var(--pink); }        /* vida baixa */
+#hpBar.neg {                                    /* vida negativa: listras */
+  background: repeating-linear-gradient(135deg, var(--pink) 0 5px, #3a1d28 5px 9px);
+}
+
+/* ---------- 6. Editor de código ---------- */
+.code {
+  position: relative;
+  height: 236px;
+  margin-top: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* <pre> e <textarea> precisam ter exatamente a mesma fonte e espaçamento */
+pre, textarea {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 16px 16px 16px 36px;
+  border: 0;
+  background: none;
+  font: 14px/22px var(--mono);
+  letter-spacing: 0;
+  white-space: pre;
+  tab-size: 4;
+}
+pre      { overflow: hidden; pointer-events: none; color: var(--text); }
+textarea { overflow: auto; resize: none; outline: none; color: transparent; caret-color: #fff; }
+
+/* seta ▶ que mostra a linha em execução */
+#arrow {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  line-height: 22px;
+  font-size: 11px;
+  color: #f5e63c;
+  opacity: 0;
+  transition: transform .15s;
+}
+
+/* cores da sintaxe */
+.k { color: var(--purple); }   /* palavra-chave */
+.v { color: var(--pink); }     /* variável */
+.n { color: var(--orange); }   /* número */
+.o { color: var(--teal); }     /* operador */
+.s { color: var(--green); }    /* texto entre aspas */
+.f { color: var(--yellow); }   /* função */
+.c { color: var(--muted); }    /* comentário */
+.c-var { color: var(--pink); } /* variável no texto de ajuda */
+
+/* destaque do trecho sendo executado */
+.mk-ev { background: rgba(79, 214, 194, .24); border-radius: 3px; }  /* calculando / verdadeiro */
+.mk-no { background: rgba(234, 90, 133, .32); border-radius: 3px; }  /* falso / erro */
+
+/* ---------- 7. Controles e mensagens ---------- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+label { display: flex; align-items: center; gap: 6px; }
+input[type=range] { width: 90px; accent-color: var(--teal); }
+
+button {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--green);
+  color: #161716;
+  font: 700 12px var(--mono);
+  cursor: pointer;
+}
+button.secondary { background: #2b2d2b; color: var(--text); }
+
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+#message     { min-height: 18px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+#message.err { color: var(--pink); }
+.hint        { margin-top: 8px; font-size: 11px; line-height: 1.5; color: #6d6f6c; }
+
+/* respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  #hero, #slime { animation: none; }
+}

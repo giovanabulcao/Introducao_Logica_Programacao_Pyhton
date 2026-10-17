@@ -13,7 +13,7 @@ def busca_cliente(lista: list[int], cod: int) -> int:
 
 def achou(i: int) -> bool:
     '''
-    Confere se um elemento foi encontrado na 'busca_cliente'
+    Confere se um cliente foi encontrado na 'busca_cliente'
     '''
     return i != -1
 

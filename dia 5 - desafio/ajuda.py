@@ -22,3 +22,13 @@ def vazia(lista: list) -> bool:
     Retorna se uma lista está vazia 
     '''
     return len(lista) == 0
+
+def id_repetido(lista: list[int], cod: int) -> bool:
+    '''
+    Confere se um código já está presente na lista de códigos de clientes,
+    será utilizada para impedir que usuários sejam cadastrados com id's duplicados
+    '''
+    for i in lista:
+        if cod == i:
+            return True
+    return False

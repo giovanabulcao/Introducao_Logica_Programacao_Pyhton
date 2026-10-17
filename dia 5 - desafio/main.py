@@ -26,12 +26,15 @@ def main():
     while continuar:
         if opcao == 1:
             cod = int(input("Insira o código de cadastro do cliente: "))
-            nome = input("Insira o nome do cliente: ")
-            gasto = float(input("Insira o gasto do cliente: "))
-            adiciona_cod(id_clientes, cod)
-            adiciona_nome(nome_clientes, nome)
-            adiciona_gasto(gasto_clientes, gasto)
-            print("Cliente cadastrado com sucesso!!")
+            if id_repetido(id_clientes, cod):
+                print("Já existe um cadastro com este código!!")
+            else:
+                nome = input("Insira o nome do cliente: ")
+                gasto = float(input("Insira o gasto do cliente: "))
+                adiciona_cod(id_clientes, cod)
+                adiciona_nome(nome_clientes, nome)
+                adiciona_gasto(gasto_clientes, gasto)
+                print("Cliente cadastrado com sucesso!!")
             menu()
             opcao = int(input("Qual operação você quer realizar??\n"))
 

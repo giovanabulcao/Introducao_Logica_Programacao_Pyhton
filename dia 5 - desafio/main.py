@@ -2,33 +2,7 @@ from adiciona import *
 from altera import *
 from remove import *
 from exibe import *
-
-def busca_cliente(lista: list[int], cod: int) -> int:
-    '''
-    Busca um cliente na lista de clientes e retorna o índice em que ele está posicionado na lista
-    >>> lista = [1, 2, 4, 5]
-    >>> busca_cliente(lista, 5)
-    4
-    '''
-
-    i = 0
-    achou = False
-
-    while lista[i] < len(lista) and lista[i] != cod:
-        if lista[i] == cod:
-            achou = True
-        i += 1
-
-    if not achou:
-        i = -1
-
-    return i
-
-def vazia(lista: list) -> bool:
-    '''
-    Retorna se uma lista está vazia 
-    '''
-    return len(lista) == 0
+from ajuda import *
 
 
 def menu():
@@ -50,7 +24,6 @@ def main():
     opcao = int(input("Bem vindo ao Sistema de Gerenciamento de Clientes!!\nQual operação você quer realizar??\n"))
     continuar = True
     while continuar:
-        menu()
         if opcao == 1:
             cod = int(input("Insira o código de cadastro do cliente: "))
             nome = input("Insira o nome do cliente: ")
@@ -59,6 +32,7 @@ def main():
             adiciona_nome(nome_clientes, nome)
             adiciona_gasto(gasto_clientes, gasto)
             print("Cliente cadastrado com sucesso!!")
+            menu()
             opcao = int(input("Qual operação você quer realizar??\n"))
 
         elif opcao == 2:
@@ -67,10 +41,14 @@ def main():
             else:
                 remove = int(input("Insira o código de cadastro do cliente a ser removido: "))
                 cliente = busca_cliente(id_clientes, remove)
-                remove_codigo(id_clientes, cliente)
-                remove_gasto(gasto_clientes, cliente)
-                remove_nome(nome_clientes, cliente)
-                print("Cliente removido com sucesso!!")
+                if achou(cliente):
+                    remove_codigo(id_clientes, cliente)
+                    remove_gasto(gasto_clientes, cliente)
+                    remove_nome(nome_clientes, cliente)
+                    print("Cliente removido com sucesso!!")
+                else:
+                    print("Cliente não encontrado!")
+            menu()
             opcao = int(input("Qual operação você quer realizar??\n"))
         elif opcao == 3:
             if vazia(id_clientes):
@@ -78,13 +56,17 @@ def main():
             else:
                 altera = int(input("Insira o código de cadastro do cliente a ser alterado: "))
                 cliente = busca_cliente(id_clientes, altera)
-                alt = int(input("O que você deseja alterar?\n1 - Nome\n2 - Gasto\n>>> "))
-                if alt == 1:
-                    novo_nome = input("Insira o nome novo a ser cadastrado: ")
-                    altera_nome(nome_clientes, cliente, novo_nome)
-                elif alt == 2:
-                    novo_gasto = float(input("Digite o novo gasto: "))
-                    altera_gasto(gasto_clientes, cliente, novo_gasto)
+                if achou(cliente):
+                    alt = int(input("O que você deseja alterar?\n1 - Nome\n2 - Gasto\n>>> "))
+                    if alt == 1:
+                        novo_nome = input("Insira o nome novo a ser cadastrado: ")
+                        altera_nome(nome_clientes, cliente, novo_nome)
+                    elif alt == 2:
+                        novo_gasto = float(input("Digite o novo gasto: "))
+                        altera_gasto(gasto_clientes, cliente, novo_gasto)
+                else:
+                    print("Cliente não encontrado!!")
+            menu()
             opcao = int(input("Qual operação você quer realizar??\n"))
 
         elif opcao == 4:
@@ -98,6 +80,10 @@ def main():
         elif opcao == 5:
             continuar = False
             print("Obrigado por utilizar nosso sistema!!")
+        
+        else:
+            menu()
+            opcao = int(input("Opção inválida, insira novamente!!"))
 
         
 

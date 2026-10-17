@@ -29,4 +29,6 @@ def adiciona_gasto(lista_gasto: list[float], gasto: float) -> None:
     >>> adiciona_gasto(lista_g, 550.50) # [550.50]
     >>> adiciona_gasto(lista_g, 200.99) # [550.50, 200.99]
     '''
+    while gasto < 0:
+            gasto = float(input("Valor de gasto negativo!! Insira novamente: "))
     lista_gasto.append(gasto)

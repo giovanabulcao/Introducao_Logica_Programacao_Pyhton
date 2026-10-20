@@ -7,4 +7,3 @@ elif cor == "AMARELO":
     print("atenção")
 else:
     print("seguir")
-

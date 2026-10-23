@@ -1,4 +1,4 @@
-import operacoes # chamada do arquivo 'operacoes.py' trazendo todas as funções presentes no arquivo para o cóigo
+import operacoes # chamada do arquivo 'operacoes.py' 
 
 
 def menor_que_vinte(num: int) -> bool:

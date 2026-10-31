@@ -26,14 +26,14 @@ Conceitos fundamentais de programação: o que é um algoritmo, o que é uma lin
 #### Aula 2 - Listas, Condicionais e Laços
 O que é uma lista e as funções relacionadas a ela, estruturas condicionais (`if`, `else`, `elif`) e a estrutura de repetição `for`.
 
-#### Aula 3 - While, Escopo e Funções
-Recapitulação das estruturas de repetição, introdução ao `while`, escopo de variáveis, funções e diferentes formas de comentar o código.
+#### Aula 3 - Estruturas de repetição
+Recapitulação das estruturas de repetição, tipos de `FOR` e `WHILE`.
 
-#### Aula 4 - Módulos
-Introdução ao conceito de `import` e módulos, com um projeto básico de entrada e saída de informações.
+#### Aula 4 - Módulos e Funções
+Introdução ao conceito de `import`, modularização e Funções.
 
 #### Projeto Final
-Para a emissão do certificado, os participantes desenvolvem um projeto mais completo, um sistema no qual aplicam listas e operações de inicialização, alteração e finalização dessas estruturas.
+Os participantes desenvolvem um projeto mais completo, um sistema no qual aplicam listas e operações de inicialização, alteração e finalização dessas estruturas.
 
 ### Licença
 
